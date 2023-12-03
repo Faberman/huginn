@@ -31,14 +31,14 @@ RUN git init && \
     bundle config set --local path vendor/bundle && \
     bundle config set --local without 'test development'
 
-RUN APP_SECRET_TOKEN=secret DATABASE_ADAPTER=mysql2 ON_HEROKU=true bundle install -j 4
+RUN APP_SECRET_TOKEN=3bd139f9186b31a85336bb89cd1a1337078921134b2f48e022fd09c234d764d3e19b018b2ab789c6e0e04a1ac9e3365116368049660234c2038dc9990513d49c DATABASE_ADAPTER=postgresql ON_HEROKU=true bundle install -j 4
 
 COPY --chown="$UID:0" ./ /app/
 
 ARG OUTDATED_DOCKER_REGISTRY=false
 ENV OUTDATED_DOCKER_REGISTRY=${OUTDATED_DOCKER_REGISTRY}
 
-RUN APP_SECRET_TOKEN=secret DATABASE_ADAPTER=mysql2 ON_HEROKU=true bundle exec rake assets:clean assets:precompile
+RUN APP_SECRET_TOKEN=3bd139f9186b31a85336bb89cd1a1337078921134b2f48e022fd09c234d764d3e19b018b2ab789c6e0e04a1ac9e3365116368049660234c2038dc9990513d49c DATABASE_ADAPTER=postgresql ON_HEROKU=true bundle exec rake assets:clean assets:precompile
 
 EXPOSE 3000
 
@@ -52,4 +52,4 @@ COPY ["docker/multi-process/scripts/bootstrap.sh", \
       "docker/scripts/setup_env", "/scripts/"]
 CMD ["/scripts/init"]
 
-VOLUME /var/lib/mysql
+#VOLUME /var/lib/mysql
